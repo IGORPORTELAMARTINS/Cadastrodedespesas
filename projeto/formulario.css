@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap'); /* Fonte Montserrat */
+
+/* Estilo base do corpo da página */
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    background-color: #f5f3e7;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container principal */
+.container {
+    display: flex;
+    gap: 60px;
+    padding: 40px;
+    align-items: flex-start;
+}
+
+/* Limita largura do texto */
+.texto {
+    max-width: 300px;
+}
+
+/* Título */
+#titulo {
+    font-weight: 600;
+    font-size: 2rem;
+    margin: 0 0 10px 0;
+    color: #1e1e1e;
+}
+
+/* Estilo do select */
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #f5f3e7;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+/* Subtítulo */
+#subtitulo {
+    font-size: 1rem;
+    margin: 0;
+    color: #333;
+}
+
+/* Estilo do formulário */
+form {
+    background-color: #2e4f3e;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Campos do formulário */
+.campo {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* Rótulo dos campos */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+/* Campos de entrada e botão */
+input[type="text"],
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    background-color: #f5f3e7;
+    color: #333;
+    box-sizing: border-box;
+}
+
+/* Botão */
+button {
+    background-color: #a7c4a0;
+    color: #2e4f3e;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+/* Efeito hover no botão */
+button:hover {
+    background-color: #92b291;
+}
+
+/* Estilo do calendário Flatpickr */
+.flatpickr-calendar {
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}

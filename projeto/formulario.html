@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Cadastro de Despesa</title>
+
+    <!-- Estilos e fontes -->
+    <link rel="stylesheet" href="formulario.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+
+    <!-- Flatpickr (calendário) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="texto">
+            <h1 id="titulo">Cadastro de Despesas</h1>
+        </div>
+
+        <!-- Formulário principal -->
+        <form method="POST" action="cadastra_despesa.php">
+            <!-- Campo: Despesa -->
+            <div class="campo">
+                <label for="despesa">Despesa</label>
+                <input type="text" name="despesa" id="despesa" required>
+            </div>
+
+            <!-- Campo: Data -->
+            <div class="campo">
+                <label for="data">Data da Despesa</label>
+                <input type="text" name="data" id="data" required placeholder="dd/mm/aaaa">
+            </div>
+
+            <!-- Campo: Categoria -->
+            <div class="campo">
+                <label for="categoria">Categoria</label>
+                <select name="categoria" id="categoria" required>
+                    <option value="">Selecione...</option>
+                    <option value="Alimentação">Alimentação</option>
+                    <option value="Combustível">Combustível</option>
+                    <option value="Academia">Academia</option>
+                    <option value="Mercado">Mercado</option>
+                    <option value="Conserto">Conserto</option>
+                    <option value="Outros">Outros</option>
+                </select>
+            </div>
+
+            <!-- Campo: Forma de pagamento -->
+            <div class="campo">
+                <label for="pagamento"><strong>Forma de Pagamento</strong></label>
+                <select name="pagamento" id="pagamento" required onchange="toggleParcelamento()">
+                    <option value="">Selecione...</option>
+                    <option value="dinheiro">Dinheiro</option>
+                    <option value="pix">Pix</option>
+                    <option value="credito">Cartão de Crédito</option>
+                    <option value="debito">Cartão de Débito</option>
+                    <option value="outros">Outros</option>
+                </select>
+            </div>
+            
+            <!-- Campo: Parcelamento (aparece apenas se crédito) -->
+            <div class="campo" id="campo-parcelamento" style="display: none;">
+                <label for="parcelamento"><strong>Parcelamento</strong></label>
+                <select name="parcelamento" id="parcelamento">
+                    <option value="">Selecione...</option>
+                    <!-- Opções geradas via JavaScript -->
+                    <script>
+                        for (let i = 1; i <= 48; i++) {
+                            document.write(`<option value="${i}x">${i}x</option>`);
+                        }
+                    </script>
+                </select>
+            </div>
+
+            <!-- Campo: Tipo de Despesa -->
+            <div class="campo" style="text-align: center;">
+                <label><strong>Tipo de Despesa</strong></label>
+                <div style="display: flex; justify-content: center; gap: 40px; margin-top: 10px;">
+                    <label>
+                        <input type="radio" name="tipo" value="Fixa" required> Fixa
+                    </label>
+                    <label>
+                        <input type="radio" name="tipo" value="Variável"> Variável
+                    </label>
+                </div>
+            </div>
+
+            <!-- Campo: Valor -->
+            <div class="campo">
+                <label for="valor">Valor</label>
+                <div style="display: flex; align-items: center;">
+                    <span style="margin-right: 6px;">R$</span>
+                    <input type="text" name="valor" id="valor" required placeholder="0,00" inputmode="decimal">
+                </div>
+            </div>
+
+            <!-- Botão de envio -->
+            <button class="botao" type="submit">Concluir</button>
+        </form>
+    </div>
+
+    <!-- Inicialização do Flatpickr -->
+    <script>
+        flatpickr("#data", {
+            dateFormat: "d/m/Y",
+            locale: {
+                firstDayOfWeek: 1,
+                weekdays: {
+                    shorthand: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                    longhand: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+                },
+                months: {
+                    shorthand: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    longhand: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                }
+            }
+        });
+    </script>
+
+    <!-- Mostrar ou esconder o campo de parcelamento -->
+    <script>
+        function toggleParcelamento() {
+            const pagamento = document.getElementById('pagamento').value;
+            const campoParcelamento = document.getElementById('campo-parcelamento');
+
+            if (pagamento === 'credito') {
+                campoParcelamento.style.display = 'block';
+            } else {
+                campoParcelamento.style.display = 'none';
+                document.getElementById('parcelamento').value = '';
+            }
+        }
+    </script>
+
+    <!-- Formatação automática do valor -->
+    <script>
+        const valorInput = document.getElementById("valor");
+
+        valorInput.addEventListener("input", function () {
+            let valor = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+            valor = (parseInt(valor, 10) / 100).toFixed(2) + '';
+            valor = valor.replace(".", ",");
+            valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            this.value = valor;
+        });
+
+        valorInput.addEventListener("focus", function () {
+            if (this.value === '') this.value = '0,00';
+        });
+
+        valorInput.addEventListener("blur", function () {
+            if (this.value === '0,00') this.value = '';
+        });
+    </script>
+
+</body>
+</html>
